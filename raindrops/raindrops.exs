@@ -1,4 +1,19 @@
 defmodule Raindrops do
+  @factors [3, 5, 7]
+
+  @factor_to_drop %{
+    3 => "Pling",
+    5 => "Plang",
+    7 => "Plong",
+  }
+
+  def drop_for_factor(number, factor) do
+      cond do
+        rem(number, factor) == 0 -> @factor_to_drop[factor]
+        true -> ""
+      end
+  end
+
   @doc """
   Returns a string based on raindrop factors.
 
@@ -10,6 +25,9 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t
   def convert(number) do
-
+    @factors
+      |> Enum.reduce("", fn (factor, acc) ->
+          acc <> drop_for_factor(number, factor) end
+        )
   end
 end
