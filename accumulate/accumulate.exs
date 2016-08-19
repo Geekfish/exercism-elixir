@@ -15,8 +15,22 @@ defmodule Accumulate do
 
   """
 
+  def recursive_map([head | tail], fun) do
+    [fun.(head) | recursive_map(tail, fun)]
+  end
+  def recursive_map([], fun) do
+    []
+  end
+
   @spec accumulate(list, (any -> any)) :: list
   def accumulate(list, fun) do
-    list |> Enum.map(fun)
+    # "Cheating" via builtin map function:
+    # list |> Enum.map(fun)
+
+    # Probably still cheating via comprehension:
+    # for item <- list, do: fun.(item)
+
+    # Let's solve this with recursion:
+    Accumulate.recursive_map(list, fun)
   end
 end
