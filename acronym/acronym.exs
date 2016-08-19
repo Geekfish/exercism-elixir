@@ -13,9 +13,9 @@ defmodule Acronym do
       |> String.replace(~r/([\p{Ll}])([\p{Lu}])/u, "\\1 \\2")
       |> String.upcase
       |> String.split
-      |> Enum.map(fn word -> String.to_charlist(word) end)
-      # Stick the first char of each word together
-      |> Enum.reduce('', fn ([head | _tail], acc) -> acc ++ [head] end)
-      |> String.Chars.to_string
+      # Split the word chars
+      |> Enum.map(fn word -> String.split(word, "") end)
+      # Append only the first char to the acronym
+      |> Enum.reduce("", fn ([head | _tail], acc) -> acc <> head end)
   end
 end
