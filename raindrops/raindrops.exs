@@ -1,6 +1,4 @@
 defmodule Raindrops do
-  @factors [3, 5, 7]
-
   @factor_to_drop %{
     3 => "Pling",
     5 => "Plang",
@@ -25,9 +23,10 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t
   def convert(number) do
-    @factors
+    factors = Map.keys(@factor_to_drop)
+    raindrops = factors
       |> Enum.reduce("", fn (factor, acc) ->
-          acc <> drop_for_factor(number, factor) end
-        )
+          acc <> drop_for_factor(number, factor) end)
+    if raindrops == "", do String.Chars.to_string number else raindrops
   end
 end
