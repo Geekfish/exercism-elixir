@@ -27,6 +27,6 @@ defmodule Raindrops do
     raindrops = factors
       |> Enum.reduce("", fn (factor, acc) ->
           acc <> drop_for_factor(number, factor) end)
-    if raindrops == "", do String.Chars.to_string number else raindrops
+    if raindrops == "", do: to_string(number), else: raindrops
   end
 end
