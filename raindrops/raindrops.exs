@@ -5,9 +5,9 @@ defmodule Raindrops do
     7 => "Plong",
   }
 
-  def drop_for_factor(number, factor) do
+  def drop_for_factor(number, factor, drop) do
       cond do
-        rem(number, factor) == 0 -> @factor_to_drop[factor]
+        rem(number, factor) == 0 -> drop
         true -> ""
       end
   end
@@ -23,10 +23,9 @@ defmodule Raindrops do
   """
   @spec convert(pos_integer) :: String.t
   def convert(number) do
-    factors = Map.keys(@factor_to_drop)
-    raindrops = factors
-      |> Enum.reduce("", fn (factor, acc) ->
-          acc <> drop_for_factor(number, factor) end)
+    raindrops = @factor_to_drop
+      |> Enum.reduce("", fn ({factor, drop}, acc) ->
+          acc <> drop_for_factor(number, factor, drop) end)
     if raindrops == "", do: to_string(number), else: raindrops
   end
 end
