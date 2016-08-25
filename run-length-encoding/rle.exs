@@ -13,10 +13,10 @@ defmodule RunLengthEncoder do
 
   @spec deserialize_encoded(String.t) :: List.t
   defp deserialize_encoded(string) do
+    # "3W2A1C" -> ["3W", "2A", "1C"]
+    #          -> [["3", "W"], ["2", "A"], ["1", "C"]]
     string
-      # "3W2A1C" -> ["3W", "2A", "1C"]
       |> regex_split_with_captures(~r/\d+[a-zA-Z]/)
-      # -> [["3", "W"], ["2", "A"], ["1", "C"]]
       |> Enum.map(&(regex_split_with_captures(&1, ~r/\d+/)))
   end
 
@@ -30,10 +30,10 @@ defmodule RunLengthEncoder do
 
   @spec deserialize_decoded(String.t) :: List.t
   defp deserialize_decoded(string) do
+    # "WWWAAC" -> ["WWW", "AA", "C"]
+    #          -> [[3, "W"], [2, "A"], [1, "C"]]
     string
-      # "WWWAAC" -> ["WWW", "AA", "C"]
       |> regex_split_with_captures(~r/(.)\1*/)
-      # -> [[3, "W"], [2, "A"], [1, "C"]]
       |> Enum.map(fn (str) ->
         [String.length(str), String.first(str)]
       end)
