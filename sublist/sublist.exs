@@ -13,13 +13,11 @@ defmodule Sublist do
     end
   end
 
-  @spec sublist?(list, list) :: bool
+  @spec sublist?(list, list) :: boolean
   def sublist?(a, b) when length(b) > length(a) do
       Enum.find_value(0..(length(b) - length(a)), false, fn(start) ->
         a === Enum.slice(b, start, length(a))
       end)
   end
-  def sublist?(a, b) do
-    false
-  end
+  def sublist?(_, _), do: false
 end
