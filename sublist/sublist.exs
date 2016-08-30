@@ -7,16 +7,19 @@ defmodule Sublist do
   def compare(a, b) do
     cond do
       a === b -> :equal
-      length(b) > length(a) and sublist?(a, b) -> :sublist
-      length(a) > length(b) and sublist?(b, a) -> :superlist
+      sublist?(a, b) -> :sublist
+      sublist?(b, a) -> :superlist
       true -> :unequal
     end
   end
 
   @spec sublist?(list, list) :: bool
-  def sublist?(a, b) do
+  def sublist?(a, b) when length(b) > length(a) do
       Enum.find_value(0..(length(b) - length(a)), false, fn(start) ->
         a === Enum.slice(b, start, length(a))
       end)
+  end
+  def sublist?(a, b) do
+    false
   end
 end
