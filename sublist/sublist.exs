@@ -16,8 +16,7 @@ defmodule Sublist do
   @spec sublist?(list, list) :: bool
   def sublist?(a, b) do
       Enum.find_value(0..(length(b) - length(a)), false, fn(start) ->
-        sublist = Enum.slice(b, start, length(a))
-        a === sublist
+        a === Enum.slice(b, start, length(a))
       end)
   end
 end
